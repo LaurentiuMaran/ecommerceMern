@@ -11,7 +11,6 @@ const productSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: [true, 'Please enter product price'],
-    max: [99999, 'Product price cannot exceed 99999'],
     default: 0.0,
   },
   description: {
@@ -30,7 +29,6 @@ const productSchema = new mongoose.Schema({
   stock: {
     type: Number,
     required: [true, 'Please enter product stock'],
-    max: [99999, 'Product stock cannot exceed 99999'],
     default: 0,
   },
 });

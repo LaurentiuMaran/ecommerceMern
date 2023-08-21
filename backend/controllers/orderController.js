@@ -100,6 +100,10 @@ exports.updateOrder = async (req, res, next) => {
       });
     }
 
+    if (req.body.status) {
+      order.status = req.body.status;
+    }
+
     await Promise.all(
       order.orderItems.map(async (item) => {
         await updateProductStock(item.product, item.quantity);

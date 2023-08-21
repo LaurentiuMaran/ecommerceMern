@@ -6,6 +6,7 @@ export const OrderList = (props) => (
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="user" />
+      <TextField source="status" />
       <NumberField source="totalPrice" />
       <DateField source="createdAt" />
     </Datagrid>

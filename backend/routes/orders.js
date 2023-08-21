@@ -15,8 +15,8 @@ const {
 router.route('/').post(isAuthenticatedUser, newOrder);
 router.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
 router.route('/me').get(isAuthenticatedUser, myOrders);
-router.route('/admin').get(isAuthenticatedUser, isAdmin, allOrders);
-router.route('/admin/:id').put(isAuthenticatedUser, isAdmin, updateOrder);
-router.route('/admin/:id').delete(isAuthenticatedUser, isAdmin, deleteOrder);
+router.route('').get(isAuthenticatedUser, isAdmin, allOrders);
+router.route('/:id').put(isAuthenticatedUser, isAdmin, updateOrder);
+router.route('/:id').delete(isAuthenticatedUser, isAdmin, deleteOrder);
 
 module.exports = router;

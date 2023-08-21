@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Layout, AppBar } from 'react-admin';
-import { Button } from '@material-ui/core';
+import { AppBar, Layout } from 'react-admin';
+import { Button, Box } from '@material-ui/core';
+import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
 
 const CustomAppBar = (props) => {
@@ -12,9 +13,12 @@ const CustomAppBar = (props) => {
 
   return (
     <AppBar {...props} sx={{ backgroundColor: 'black', color: 'white' }}>
-      <Button color="inherit" onClick={goHome}>
-        Home
-      </Button>
+      <Box display="flex" justifyContent="space-between" width="100%">
+        <div></div>{' '}
+        <Button color="inherit" onClick={goHome}>
+          <HomeIcon />
+        </Button>
+      </Box>
     </AppBar>
   );
 };

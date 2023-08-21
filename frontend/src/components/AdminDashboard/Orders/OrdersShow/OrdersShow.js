@@ -12,6 +12,7 @@ export const OrderShow = (props) => (
     <SimpleShowLayout>
       <TextField source="id" />
       <TextField source="user" />
+      <TextField source="status" />
       <NumberField source="totalPrice" />
       <DateField source="createdAt" />
     </SimpleShowLayout>
