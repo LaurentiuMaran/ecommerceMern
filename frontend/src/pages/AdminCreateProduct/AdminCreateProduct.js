@@ -27,12 +27,14 @@ const AdminCreateProduct = () => {
   return (
     <div className="bg-background flex flex-col min-h-screen">
       <Navbar />
-      <div className="flex flex-row">
+      <div className="flex flex-col md:flex-row">
         <DashboardMenu />
-        <div className="flex-grow container mx-auto py-10">
-          <h1 className="text-5xl font-bold mb-3">Create Product</h1>
-          <div className="w-full border-b border-black mt-10"></div>
-          <div className="mt-12">
+        <div className="flex-grow container mx-auto py-6 md:py-10">
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">
+            Create Product
+          </h1>
+          <div className="w-full border-b border-black mt-6 md:mt-10"></div>
+          <div className="mt-6 md:mt-12">
             <ProductForm onSubmit={handleSubmit} buttonLabel={'Add product'} />
           </div>
         </div>

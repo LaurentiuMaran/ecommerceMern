@@ -22,14 +22,14 @@ const ShoppingCart = () => {
 
   if (cart.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow px-5 py-6 mb-5">
+      <div className="bg-white rounded-lg shadow px-4 md:px-5 py-4 md:py-6 mb-4 md:mb-5">
         <p>Your cart is empty.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow px-5 py-6 mb-5">
+    <div className="bg-white rounded-lg shadow px-4 md:px-5 py-4 md:py-6 mb-4 md:mb-5">
       {cart.map((item, index) => (
         <div
           key={index}
@@ -70,13 +70,17 @@ const Summary = () => {
 
   return (
     <div>
-      <h2 className="text-4xl font-bold mb-4">Cart Summary</h2>
-      <p className="text-xl">Total items: {cart.length}</p>
-      <p className="text-xl">Total price: ${totalPrice.toFixed(2)}</p>
-      <div className="mt-12">
+      <h2 className="text-2xl md:text-4xl font-bold mb-2 md:mb-4">
+        Cart Summary
+      </h2>
+      <p className="text-lg md:text-xl">Total items: {cart.length}</p>
+      <p className="text-lg md:text-xl">
+        Total price: ${totalPrice.toFixed(2)}
+      </p>
+      <div className="mt-6 md:mt-12">
         <button
           onClick={handleOnClick}
-          className="text-2xl bg-primary text-white rounded-full px-10 py-3 hover:bg-secondary transition-colors duration-300 w-64 mx-auto md:mx-0"
+          className="text-xl md:text-2xl bg-primary text-white rounded-full px-6 md:px-10 py-2 md:py-3 hover:bg-secondary transition-colors duration-300 w-full md:w-64 mx-auto"
         >
           Checkout
         </button>
