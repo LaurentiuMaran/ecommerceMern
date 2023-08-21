@@ -63,17 +63,23 @@ exports.myOrders = async (req, res, next) => {
 exports.allOrders = async (req, res, next) => {
   try {
     const orders = await Order.find();
-
-    let totalAmount = 0;
-    orders.forEach((order) => {
-      totalAmount += order.totalPrice;
-    });
-
-    res.status(200).json({
-      success: true,
-      totalAmount,
-      orders,
-    });
+    if (Array.isArray(orders)) {
+      let totalAmount = 0;
+      orders.forEach((order) => {
+        totalAmount += order.totalPrice;
+      });
+      res.set('Content-Range', orders.length);
+      res.status(200).json({
+        success: true,
+        totalAmount,
+        data: orders,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Data is not an array',
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: false,

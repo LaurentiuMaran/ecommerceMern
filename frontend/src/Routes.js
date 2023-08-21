@@ -15,11 +15,8 @@ import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
-import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
-import AdminCreateProduct from './pages/AdminCreateProduct/AdminCreateProduct';
-import AdminUpdateProduct from './pages/AdminUpdateProduct/AdminUpdateProduct';
-import AdminDeleteProduct from './pages/AdminDeleteProduct/AdminDeleteProduct';
 import Profile from './pages/Profile/Profile';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
 
 const Routes = () => {
   return (
@@ -74,42 +71,18 @@ const Routes = () => {
           }
         />
         <Route
-          path="/admin"
-          element={
-            <AuthWrapper>
-              <AdminDashboard />
-            </AuthWrapper>
-          }
-        />
-        <Route
-          path="/admin/create-product"
-          element={
-            <AuthWrapper>
-              <AdminCreateProduct />
-            </AuthWrapper>
-          }
-        />
-        <Route
-          path="/admin/update-product"
-          element={
-            <AuthWrapper>
-              <AdminUpdateProduct />
-            </AuthWrapper>
-          }
-        />
-        <Route
-          path="/admin/delete-product"
-          element={
-            <AuthWrapper>
-              <AdminDeleteProduct />
-            </AuthWrapper>
-          }
-        />
-        <Route
           path="/profile"
           element={
             <AuthWrapper>
               <Profile />
+            </AuthWrapper>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <AuthWrapper>
+              <AdminPanel />
             </AuthWrapper>
           }
         />

@@ -20,10 +20,18 @@ exports.createProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.status(200).json({
-      success: true,
-      products,
-    });
+    if (Array.isArray(products)) {
+      res.set('Content-Range', products.length);
+      res.status(200).json({
+        success: true,
+        data: products,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Data is not an array',
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: false,

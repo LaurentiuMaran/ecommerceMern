@@ -8,7 +8,11 @@ const ordersRouter = require('./routes/orders');
 const usersRouter = require('./routes/users');
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ['Content-Range'],
+  })
+);
 
 app.use('/products', productsRouter);
 app.use('/orders', ordersRouter);
