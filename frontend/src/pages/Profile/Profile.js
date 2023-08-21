@@ -52,20 +52,22 @@ const Profile = () => {
             <div className="mt-12 text-center px-10 flex flex-col items-center">
               <h2 className="text-3xl font-bold mb-3">Orders History</h2>
               {orders.length > 0 ? (
-                orders.map((order, index) => (
-                  <div
-                    key={order._id}
-                    className="w-96 mb-4 p-3 border-b border-black"
-                  >
-                    <h3 className="font-bold text-xl mb-2">
-                      Order ID: {index + 1}
-                    </h3>
-                    <p className="mb-1">Status: {order.orderStatus}</p>
-                    <p className="mb-1">
-                      Total Price: {order.totalPrice.toFixed(2)}
-                    </p>
-                  </div>
-                ))
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {orders.map((order, index) => (
+                    <div
+                      key={order._id}
+                      className="w-full mb-4 p-3 border-b border-black"
+                    >
+                      <h3 className="font-bold text-xl mb-2">
+                        Order ID: {index + 1}
+                      </h3>
+                      <p className="mb-1">Status: {order.orderStatus}</p>
+                      <p className="mb-1">
+                        Total Price: {order.totalPrice.toFixed(2)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               ) : (
                 <p className="text-xl mt-2">No orders have been made yet.</p>
               )}

@@ -32,12 +32,16 @@ const AdminDeleteProduct = () => {
   return (
     <div className="bg-background flex flex-col min-h-screen">
       <Navbar />
-      <div className="flex flex-row">
+      <div className="flex flex-col md:flex-row">
         <DashboardMenu />
-        <div className="flex-grow container mx-auto py-10">
-          <h1 className="text-5xl font-bold mb-3">Delete Product</h1>
-          <div className="w-full border-b border-black mt-10"></div>
-          {/* TO DO */}
+        <div className="flex-grow container mx-auto py-6 md:py-10">
+          <h1 className="text-3xl md:text-5xl font-bold mb-2 md:mb-3">
+            Delete Product
+          </h1>
+          <div className="w-full border-b border-black mt-4 md:mt-10"></div>
+          <div className="mt-6 md:mt-12 text-left px-4 md:px-10 flex flex-col items-center">
+            {/* TO DO */}
+          </div>
         </div>
       </div>
       <Footer />

@@ -25,7 +25,7 @@ const Products = () => {
         <p className="text-5xl font-bold mb-3">Products</p>
         {products ? (
           products.length > 0 ? (
-            <div className="flex flex-wrap justify-center mx-4 mt-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-10">
               {products.map((product) => (
                 <ProductCard
                   key={product._id}

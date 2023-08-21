@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export const deleteProduct = async (id) => {
   const token = Cookies.get('token');
   try {

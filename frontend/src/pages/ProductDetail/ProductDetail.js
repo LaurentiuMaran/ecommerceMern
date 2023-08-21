@@ -95,7 +95,7 @@ const ProductDetail = () => {
                 Add to Cart
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-10 w-full md:max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 w-full md:max-w-3xl mx-auto">
               <div className="p-6 rounded-lg">
                 <p className="text-xl">
                   <strong>Price:</strong> ${product.price}
