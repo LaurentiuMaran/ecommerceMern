@@ -21,7 +21,7 @@ const CustomToolbar = (props) => {
           variant="outlined"
           color="secondary"
           onClick={() => navigate('/admin/products')}
-          style={{ marginLeft: '88rem' }}
+          style={{ marginLeft: '20rem' }}
         >
           Cancel
         </Button>
