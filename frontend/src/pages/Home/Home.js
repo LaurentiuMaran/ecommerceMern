@@ -4,6 +4,7 @@ import Footer from '../../components/Footer/Footer';
 import HeroBanner from '../../components/HeroBanner/HeroBanner';
 import Testimonials from '../../components/Testimonials/Testimonials';
 import Promises from '../../components/Promises/Promises';
+import NewsletterSubscribe from '../../components/NewsletterSubscribe/NewsletterSubscribe';
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <HeroBanner />
       <Testimonials />
       <Promises />
+      <NewsletterSubscribe />
       <Footer />
     </div>
   );
