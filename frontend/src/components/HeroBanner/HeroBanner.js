@@ -15,7 +15,7 @@ const HeroBanner = () => {
         </p>
         <Link
           to="/shop"
-          className="bg-black text-white px-2 py-1 rounded-full mb-4 w-32 text-center"
+          className="bg-black text-white px-2 py-1 rounded-full mb-4 w-40 text-center hover:bg-gray-800"
         >
           Shop Now
         </Link>
@@ -34,7 +34,7 @@ const HeroBanner = () => {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-1/2 mt-4 md:mt-6 ">
+      <div className="w-full md:w-1/2 mt-2 md:mt-2 ">
         <img
           src={heroBannerImage}
           alt="Your all-purpose shop"
