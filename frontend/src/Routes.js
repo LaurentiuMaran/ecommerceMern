@@ -31,7 +31,7 @@ const Routes = () => {
           }
         />
         <Route
-          path="/products"
+          path="/shop"
           element={
             <AuthWrapper>
               <Products />

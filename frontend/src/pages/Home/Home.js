@@ -5,7 +5,7 @@ import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
   return (
-    <div className="bg-background flex flex-col min-h-screen">
+    <div className=" flex flex-col min-h-screen">
       <Navbar />
       <div className="container text-center mx-auto py-10 flex-grow lg:py-20">
         <p className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
