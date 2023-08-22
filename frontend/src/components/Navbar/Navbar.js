@@ -44,7 +44,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-white border-b border-F0F0F0 text-black px-4 md:px-6 py-2 md:py-4">
+    <nav className="bg-white border-b border-mainGray text-black px-4 md:px-6 py-2 md:py-4">
       <div className="flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center mb-2 md:mb-0">
           <div className="text-xl md:text-2xl font-bold">
@@ -82,7 +82,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search"
-              className="pl-10 pr-4 py-1 border rounded-full w-full focus:border-F0F0F0 hover:border-black"
+              className="pl-10 pr-4 py-1 border rounded-full w-full focus:border-mainGray hover:border-black"
             />
           </div>
           <Link to="/cart" className="mr-6 hover:bg-gray-200 p-2 rounded">

@@ -9,6 +9,7 @@ module.exports = {
         footer: '#000',
         primary: '#3f50b5',
         secondary: '#757ce8',
+        mainGray: '#F0F0F0',
       },
     },
   },
