@@ -11,7 +11,7 @@ export const getAllProducts = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error('Error during fetching all products:', error);
     return null;

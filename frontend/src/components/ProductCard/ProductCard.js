@@ -15,46 +15,34 @@ const ProductCard = ({ product }) => {
       } else {
         dispatch({
           type: 'ADD_ITEM',
-          payload: {
-            id: product.id,
-            image: product.image,
-            name: product.name,
-            description: product.description,
-            price: product.price,
-          },
+          payload: product,
         });
         addToast('Product added to cart', { appearance: 'success' });
       }
     } catch (err) {
-      addToast('Product could not been added to cart', { appearance: 'error' });
+      addToast('Product could not be added to cart', { appearance: 'error' });
     }
   };
 
   return (
-    <div className="flex flex-col items-center bg-white p-2 md:p-4 rounded shadow-md overflow-hidden m-2 md:m-4 w-48 md:w-80 h-auto justify-between">
+    <div className="flex flex-col items-center bg-mainGray p-4 rounded shadow-md overflow-hidden m-4 w-80 h-auto justify-between">
       <div>
-        <Link to={`/product/${product.id}`}>
-          <img
-            className="h-32 md:h-64 w-full object-cover mb-2 md:mb-4"
-            src={product.image}
-            alt={product.name}
-          />
-        </Link>
-        <hr className="w-full border-t border-gray-400" />
-        <div className="w-full text-center">
-          <Link to={`/product/${product.id}`}>
-            <h2 className="text-xl md:text-2xl font-bold mb-1 md:mb-2">
-              {product.name}
-            </h2>
-          </Link>
-          <p className="mb-1 md:mb-2 flex-grow">{product.description}</p>
-        </div>
+        <img
+          className="h-32 w-full object-cover mb-4"
+          src={product.image}
+          alt={product.name}
+        />
       </div>
       <div className="w-full text-center">
-        <p className="font-bold mb-1 md:mb-2">${product.price}</p>
+        <Link to={`/product/${product.id}`}>
+          <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
+        </Link>
+        <p className="font-bold mb-2">${product.price}</p>
+      </div>
+      <div className="w-full text-center">
         <button
           onClick={handleAddToCart}
-          className="bg-primary text-white rounded-full px-6 md:px-10 py-2 md:py-3 hover:bg-secondary transition-colors duration-300"
+          className="bg-black text-white rounded-full px-10 py-3 hover:bg-gray-800 transition-colors duration-300"
         >
           Add to Cart
         </button>

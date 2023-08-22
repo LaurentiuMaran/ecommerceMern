@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import NewsletterSubscribe from '../../components/NewsletterSubscribe/NewsletterSubscribe';
 import Loader from '../../components/Loader/Loader';
 import { getAllProducts } from '../../utils/products/getAllProducts';
 
@@ -11,18 +12,18 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const result = await getAllProducts();
-      if (result && result.success) {
-        setProducts(result.products);
+      if (result) {
+        setProducts(result);
       }
     };
     fetchProducts();
   }, []);
 
   return (
-    <div className="bg-background flex flex-col min-h-screen">
+    <div className="bg-white flex flex-col min-h-screen">
       <Navbar />
-      <div className="container text-center mx-auto py-10 flex-grow">
-        <p className="text-5xl font-bold mb-3">Products</p>
+      <div className="container mx-auto py-10 flex-grow">
+        <p className="text-3xl font-bold mb-3 text-left ml-4">Products</p>
         {products ? (
           products.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-10">
@@ -40,15 +41,18 @@ const Products = () => {
               ))}
             </div>
           ) : (
-            <>
-              <p className="text-2xl bold mt-64">No products found.</p>
-              <p className="text-2xl bold">Please try again later!</p>
-            </>
+            <div className="flex flex-col items-center mt-64">
+              <p className="text-2xl font-bold">No products found.</p>
+              <p className="text-2xl font-bold">Please try again later!</p>
+            </div>
           )
         ) : (
-          <Loader />
+          <div className="flex justify-center items-center mt-64">
+            <Loader />
+          </div>
         )}
       </div>
+      <NewsletterSubscribe />
       <Footer />
     </div>
   );
