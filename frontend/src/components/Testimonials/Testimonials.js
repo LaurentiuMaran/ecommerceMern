@@ -46,21 +46,30 @@ const Testimonials = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [fade, setFade] = useState('fadeIn');
 
   const handlePrevious = () => {
-    if (currentIndex === 0) {
-      setCurrentIndex(testimonialsData.length - 1);
-    } else {
-      setCurrentIndex(currentIndex - 1);
-    }
+    setFade('fadeOut');
+    setTimeout(() => {
+      if (currentIndex === 0) {
+        setCurrentIndex(testimonialsData.length - 1);
+      } else {
+        setCurrentIndex(currentIndex - 1);
+      }
+      setFade('fadeIn');
+    }, 300);
   };
 
   const handleNext = () => {
-    if (currentIndex === testimonialsData.length - 1) {
-      setCurrentIndex(0);
-    } else {
-      setCurrentIndex(currentIndex + 1);
-    }
+    setFade('fadeOut');
+    setTimeout(() => {
+      if (currentIndex === testimonialsData.length - 1) {
+        setCurrentIndex(0);
+      } else {
+        setCurrentIndex(currentIndex + 1);
+      }
+      setFade('fadeIn');
+    }, 300);
   };
 
   return (
@@ -68,7 +77,7 @@ const Testimonials = () => {
       <h2 className="text-4xl font-bold mb-8">Our Happy Customers</h2>
       <div className="flex justify-between">
         <button onClick={handlePrevious}>←</button>
-        <div className="border-mainGray border p-4 w-80">
+        <div className={`border-mainGray border p-4 w-80 ${fade}`}>
           <div className="flex justify-left mb-2">{'⭐️ ⭐️ ⭐️ ⭐️ ⭐️'}</div>
           <div className="flex items-center">
             <h3 className="font-bold ml-1">
@@ -79,6 +88,16 @@ const Testimonials = () => {
         </div>
         <button onClick={handleNext}>→</button>
       </div>
+      <style jsx>{`
+        .fadeIn {
+          transition: opacity 0.3s ease-in-out;
+          opacity: 1;
+        }
+        .fadeOut {
+          transition: opacity 0.3s ease-in-out;
+          opacity: 0;
+        }
+      `}</style>
     </div>
   );
 };
