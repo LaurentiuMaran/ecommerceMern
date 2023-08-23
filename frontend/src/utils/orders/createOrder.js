@@ -5,10 +5,14 @@ export const createOrder = async (orderData, orderItems, totalPrice) => {
   try {
     setupAxios();
     const userId = fetchUserId();
+    const formattedOrderItems = orderItems.map((item) => ({
+      product: item.id,
+      quantity: 1,
+    }));
     const completeOrderData = {
       user: userId,
       address: { ...orderData },
-      orderItems,
+      orderItems: formattedOrderItems,
       totalPrice,
     };
 
