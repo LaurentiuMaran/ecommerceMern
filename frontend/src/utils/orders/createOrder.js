@@ -7,7 +7,7 @@ export const createOrder = async (orderData, orderItems, totalPrice) => {
     const userId = fetchUserId();
     const formattedOrderItems = orderItems.map((item) => ({
       product: item.id,
-      quantity: 1,
+      quantity: item.quantity || 1,
     }));
     const completeOrderData = {
       user: userId,
