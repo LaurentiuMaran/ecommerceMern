@@ -10,11 +10,14 @@ export const register = async (name, email, password, navigate) => {
       email,
       password,
     });
-    Cookies.set('token', response.data.token, { expires: 1 });
-    navigate('/');
-    return response.data;
+    if (response.data && response.data.token) {
+      Cookies.set('token', response.data.token, { expires: 1 });
+      navigate('/');
+      return response.data;
+    } else {
+      throw new Error('Token not received');
+    }
   } catch (error) {
-    console.error('Error during registration:', error);
-    return null;
+    throw error;
   }
 };

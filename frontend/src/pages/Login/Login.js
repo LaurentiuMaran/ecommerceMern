@@ -1,8 +1,10 @@
-import { Formik, Form } from 'formik';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
+import loginImage from '../../assets/login-image.jpg';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import TextInput from '../../components/TextInput/TextInput';
 import { login } from '../../utils/auth/login';
 import { useToasts } from 'react-toast-notifications';
 
@@ -15,78 +17,97 @@ const Login = () => {
   const navigate = useNavigate();
   const { addToast } = useToasts();
 
+  const handleSubmit = async (values) => {
+    try {
+      const { email, password } = values;
+      await login(email, password, navigate);
+      addToast('Logged in successfully', { appearance: 'success' });
+      navigate('/');
+    } catch (error) {
+      addToast('Failed to log in', { appearance: 'error' });
+    }
+  };
+
   return (
-    <div className="bg-background flex flex-col items-center min-h-screen">
-      <div className="mt-20 w-full max-w-lg mx-auto px-4 sm:px-0">
-        <h2 className="text-4xl font-bold mb-10 text-center">Login</h2>
-        <Formik
-          initialValues={{
-            email: '',
-            password: '',
-          }}
-          validationSchema={validationSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            try {
-              const response = await login(
-                values.email,
-                values.password,
-                navigate
-              );
-              if (response) {
-                addToast('Login successful', { appearance: 'success' });
-              }
-            } catch (error) {
-              addToast('Error during login', { appearance: 'error' });
-            } finally {
-              setSubmitting(false);
-            }
-          }}
-        >
-          {(formik) => (
-            <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto w-full">
+    <div className="bg-white flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex-grow flex mt-4 mb-24">
+        <div className="w-1/2">
+          <img
+            src={loginImage}
+            alt="Login"
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <div className="w-1/2 p-10">
+          <h1 className="text-3xl mb-2">Log in to BazaarBasket</h1>
+          <p className="mb-6">Enter your details below</p>
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
               <div className="mb-4">
-                <TextInput
-                  label="Email"
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Email
+                </label>
+                <Field
+                  id="email"
                   name="email"
                   type="email"
-                  placeholder="Email"
+                  className="mt-1 p-2 w-full border rounded-md"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-red-500"
                 />
               </div>
               <div className="mb-4">
-                <TextInput
-                  label="Password"
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-600"
+                >
+                  Password
+                </label>
+                <Field
+                  id="password"
                   name="password"
                   type="password"
-                  placeholder="Password"
+                  className="mt-1 p-2 w-full border rounded-md"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-red-500"
                 />
               </div>
-              <div className="flex justify-between my-4">
-                <Link
-                  to="/register"
-                  className="text-primary hover:text-secondary transition-colors duration-300"
-                >
-                  Register instead
-                </Link>
-                <Link
-                  to="/forgot-password"
-                  className="text-primary hover:text-secondary transition-colors duration-300"
-                >
-                  Forgot your password?
-                </Link>
-              </div>
-              <div className="mb-4">
+              <div className="flex justify-between items-center">
                 <button
                   type="submit"
-                  disabled={formik.isSubmitting}
-                  className="bg-primary text-white rounded-full px-10 py-3 hover:bg-secondary transition-colors duration-300 w-full"
+                  className="bg-black text-white rounded-full px-10 py-2"
                 >
-                  Login
+                  Log In
                 </button>
+                <div>
+                  <Link to="/forgot-password" className="text-black">
+                    Forget Password
+                  </Link>
+                  <span className="mx-2">|</span>
+                  <Link to="/register" className="text-black">
+                    Register Instead
+                  </Link>
+                </div>
               </div>
             </Form>
-          )}
-        </Formik>
+          </Formik>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
