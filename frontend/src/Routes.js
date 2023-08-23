@@ -7,7 +7,7 @@ import {
 import { AuthWrapper } from './utils/auth/AuthWrapper';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
-import Contact from './pages/Contact/Contact';
+import About from './pages/About/About';
 import Home from './pages/Home/Home';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Shop from './pages/Shop/Shop';
@@ -63,10 +63,10 @@ const Routes = () => {
           }
         />
         <Route
-          path="/contact"
+          path="/about"
           element={
             <AuthWrapper>
-              <Contact />
+              <About />
             </AuthWrapper>
           }
         />

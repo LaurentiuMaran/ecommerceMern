@@ -54,7 +54,7 @@ const ProductDetail = () => {
       <div className="flex flex-row justify-center items-start my-10 mb-16">
         <div className="w-1/2 ml-4">
           <img
-            className="w-4/5 object-cover rounded-2xl"
+            style={{ width: '700px', height: '700px', objectFit: 'cover' }}
             src={product.image}
             alt={product.name}
           />
