@@ -22,14 +22,7 @@ const Routes = () => {
   return (
     <Router>
       <ReactRoutes>
-        <Route
-          path="/"
-          element={
-            <AuthWrapper>
-              <Home />
-            </AuthWrapper>
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route
           path="/shop"
           element={
@@ -62,14 +55,7 @@ const Routes = () => {
             </AuthWrapper>
           }
         />
-        <Route
-          path="/about"
-          element={
-            <AuthWrapper>
-              <About />
-            </AuthWrapper>
-          }
-        />
+        <Route path="/about" element={<About />} />
         <Route
           path="/profile"
           element={

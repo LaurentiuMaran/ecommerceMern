@@ -6,6 +6,7 @@ import { getUserById } from '../../utils/auth/getUserById';
 const Navbar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const dropdownRef = useRef(null);
 
   const logoutHandler = () => {
@@ -29,6 +30,8 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    const token = Cookies.get('token');
+    setIsAuthenticated(!!token);
     const storedUserRole = localStorage.getItem('userRole');
     if (storedUserRole === 'admin') {
       setIsAdmin(true);
@@ -54,63 +57,82 @@ const Navbar = () => {
             <Link to="/" className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded">
               Home
             </Link>
-            <Link
-              to="/shop"
-              className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
-            >
-              Shop
-            </Link>
-            <Link
-              to="/about"
-              className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
-            >
-              About
-            </Link>
-            {isAdmin && (
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/shop"
+                  className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
+                >
+                  Shop
+                </Link>
+                <Link
+                  to="/about"
+                  className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
+                >
+                  About
+                </Link>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
+                  >
+                    Admin
+                  </Link>
+                )}
+              </>
+            ) : (
               <Link
-                to="/admin"
+                to="/about"
                 className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
               >
-                Admin
+                About
               </Link>
             )}
           </div>
         </div>
-        <div className="flex items-center">
-          <div className="relative w-44 mr-6">
-            <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black"></i>
-            <input
-              type="text"
-              placeholder="Search"
-              className="pl-10 pr-4 py-1 border rounded-full w-full focus:border-mainGray hover:border-black"
-            />
+        {isAuthenticated ? (
+          <div className="flex items-center">
+            <div className="relative w-44 mr-6">
+              <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black"></i>
+              <input
+                type="text"
+                placeholder="Search"
+                className="pl-10 pr-4 py-1 border rounded-full w-full focus:border-mainGray hover:border-black"
+              />
+            </div>
+            <Link to="/cart" className="mr-6 hover:bg-gray-200 p-2 rounded">
+              <i className="fas fa-shopping-cart"></i>
+            </Link>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                className="fas fa-user hover:bg-gray-200 p-2 rounded"
+                onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+              ></button>
+              {isDropdownVisible && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded py-1 z-10">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-black hover:bg-gray-200"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    className="block text-left px-4 py-2 w-full text-black hover:bg-gray-200"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
-          <Link to="/cart" className="mr-6 hover:bg-gray-200 p-2 rounded">
-            <i className="fas fa-shopping-cart"></i>
-          </Link>
-          <div className="relative" ref={dropdownRef}>
-            <button
-              className="fas fa-user hover:bg-gray-200 p-2 rounded"
-              onClick={() => setIsDropdownVisible(!isDropdownVisible)}
-            ></button>
-            {isDropdownVisible && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded py-1 z-10">
-                <Link
-                  to="/profile"
-                  className="block px-4 py-2 text-black hover:bg-gray-200"
-                >
-                  Profile
-                </Link>
-                <button
-                  className="block text-left px-4 py-2 w-full text-black hover:bg-gray-200"
-                  onClick={logoutHandler}
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+        ) : (
+          <div className="flex items-center">
+            <Link to="/login" className="mr-6 hover:bg-gray-200 p-2 rounded">
+              <i className="fas fa-user"></i>
+            </Link>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );
