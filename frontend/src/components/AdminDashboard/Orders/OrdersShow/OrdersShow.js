@@ -10,11 +10,13 @@ import {
 export const OrderShow = (props) => (
   <Show {...props}>
     <SimpleShowLayout>
-      <TextField source="id" />
-      <TextField source="user" />
-      <TextField source="status" />
-      <NumberField source="totalPrice" />
-      <DateField source="createdAt" />
+      <TextField source="address.fullName" label="Name" fullWidth disabled />
+      <TextField source="status" fullWidth />
+      <NumberField source="totalPrice" fullWidth />
+      <TextField source="address.address" fullWidth />
+      <TextField source="address.country" fullWidth />
+      <TextField source="address.state" fullWidth />
+      <DateField source="createdAt" fullWidth />
     </SimpleShowLayout>
   </Show>
 );

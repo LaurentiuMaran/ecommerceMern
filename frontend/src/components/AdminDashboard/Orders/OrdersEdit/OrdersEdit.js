@@ -10,11 +10,11 @@ import {
 export const OrderEdit = (props) => (
   <Edit {...props}>
     <SimpleForm>
-      <TextInput disabled source="id" />
-      <TextInput source="user" />
-      <NumberInput source="totalPrice" />
+      <TextInput source="user" fullWidth disabled />
+      <NumberInput source="totalPrice" fullWidth />
       <SelectInput
         source="status"
+        fullWidth
         choices={[
           { id: 'pending', name: 'Pending' },
           { id: 'processing', name: 'Processing' },

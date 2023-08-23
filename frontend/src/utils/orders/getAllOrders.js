@@ -1,19 +1,13 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
-
-const BASE_URL = process.env.REACT_APP_API_URL;
+import { setupAxios } from '../axiosSetup';
 
 export const getAllOrders = async () => {
-  const token = Cookies.get('token');
   try {
-    const response = await axios.get(`${BASE_URL}/orders/admin`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    setupAxios();
+    const response = await axios.get(`/orders`);
     return response.data;
   } catch (error) {
     console.error('Error during fetching all orders:', error);
-    return null;
+    throw error;
   }
 };

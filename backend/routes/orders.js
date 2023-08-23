@@ -12,11 +12,17 @@ const {
   deleteOrder,
 } = require('../controllers/orderController');
 
-router.route('/').post(isAuthenticatedUser, newOrder);
-router.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
+router
+  .route('/')
+  .post(isAuthenticatedUser, newOrder)
+  .get(isAuthenticatedUser, isAdmin, allOrders);
+
 router.route('/me').get(isAuthenticatedUser, myOrders);
-router.route('').get(isAuthenticatedUser, isAdmin, allOrders);
-router.route('/:id').put(isAuthenticatedUser, isAdmin, updateOrder);
-router.route('/:id').delete(isAuthenticatedUser, isAdmin, deleteOrder);
+
+router
+  .route('/:id')
+  .get(isAuthenticatedUser, getSingleOrder)
+  .put(isAuthenticatedUser, isAdmin, updateOrder)
+  .delete(isAuthenticatedUser, isAdmin, deleteOrder);
 
 module.exports = router;
