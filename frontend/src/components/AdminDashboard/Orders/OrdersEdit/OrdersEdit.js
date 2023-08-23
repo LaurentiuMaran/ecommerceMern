@@ -18,7 +18,6 @@ export const OrderEdit = (props) => (
         choices={[
           { id: 'pending', name: 'Pending' },
           { id: 'processing', name: 'Processing' },
-          { id: 'shipped', name: 'Shipped' },
           { id: 'delivered', name: 'Delivered' },
           { id: 'cancelled', name: 'Cancelled' },
         ]}

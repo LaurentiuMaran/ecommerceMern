@@ -32,12 +32,27 @@ const adminDataProvider = {
           data: mappedData,
           total: mappedData.length,
         };
+      } else if (
+        response.data &&
+        response.data.orders &&
+        Array.isArray(response.data.orders)
+      ) {
+        const mappedData = response.data.orders.map((item) => ({
+          ...item,
+          id: item._id,
+        }));
+
+        return {
+          data: mappedData,
+          total: response.data.total || mappedData.length,
+        };
       } else {
         console.error('Unexpected response format', response);
         throw new Error('Data is not an array');
       }
     });
   },
+
   getOne: (resource, params) => {
     return dataProvider.getOne(resource, params).then((response) => {
       if (resource === 'orders') {
