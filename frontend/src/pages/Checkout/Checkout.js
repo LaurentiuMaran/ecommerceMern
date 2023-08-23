@@ -5,7 +5,7 @@ import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
 
 const Checkout = () => {
   return (
-    <div className="bg-background flex flex-col min-h-screen">
+    <div className="bg-white flex flex-col min-h-screen">
       <Navbar />
       <div className="container mx-auto py-6 md:py-10 flex-grow flex flex-col items-center">
         <p className="text-3xl md:text-5xl font-bold mb-2 md:mb-3 text-center">

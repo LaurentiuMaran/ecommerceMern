@@ -123,26 +123,17 @@ const Profile = () => {
             </section>
           )}
           {activeTab === 'orders' && (
-            <div>
-              <h2 className="text-2xl mb-4 mt-16 mb-48">My Orders</h2>
+            <div className="mb-48">
+              <h2 className="text-2xl mb-4 mt-16 ">My Orders</h2>
               {orders.map((order, index) => (
                 <div key={index} className="border p-4 mb-4">
                   <h3 className="text-lg font-bold">Order #{index + 1}</h3>
                   <p>Status: {order.status}</p>
                   <p>Total Price: ${order.totalPrice}</p>
-                  <p>
-                    Created At: {new Date(order.createdAt).toLocaleString()}
-                  </p>
-                  <h4>Address:</h4>
-                  <p>
-                    {order.address.firstName} {order.address.lastName}
-                  </p>
-                  <p>{order.address.address}</p>
-                  <p>{order.address.address2}</p>
-                  <p>
-                    {order.address.city}, {order.address.state}{' '}
-                    {order.address.zip}
-                  </p>
+                  <p>Date: {new Date(order.createdAt).toLocaleString()}</p>
+                  <p>Address: {order.address.address}</p>
+                  <p>State: {order.address.state}</p>
+                  <p>Country: {order.address.country}</p>
                 </div>
               ))}
             </div>

@@ -4,11 +4,38 @@ const Product = require('../schemas/productSchema');
 // Create new order
 exports.newOrder = async (req, res, next) => {
   try {
-    const order = await Order.create(req.body);
+    const { user, address, orderItems, totalPrice } = req.body;
+    if (
+      !user ||
+      !address ||
+      !Array.isArray(orderItems) ||
+      orderItems.length === 0 ||
+      !totalPrice
+    ) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid input data',
+      });
+    }
+
+    const newOrder = new Order({
+      user,
+      address,
+      orderItems,
+      totalPrice,
+    });
+
+    await Promise.all(
+      newOrder.orderItems.map(async (item) => {
+        await updateProductStock(item.product, item.quantity);
+      })
+    );
+
+    await newOrder.save();
 
     res.status(201).json({
       success: true,
-      order,
+      order: newOrder,
     });
   } catch (error) {
     res.status(500).json({

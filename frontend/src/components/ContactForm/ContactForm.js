@@ -23,8 +23,8 @@ const ContactForm = () => {
             <div className="text-xl text-gray-700">Write To Us</div>
           </div>
           <p>Fill out our form and we will contact you within 24 hours.</p>
-          <p>customer@bazaarmarket.com</p>
-          <p>support@bazaarmarket.com</p>
+          <p>customer@bazaarbasket.com</p>
+          <p>support@bazaarbasket.com</p>
         </div>
       </div>
 

@@ -1,24 +1,13 @@
 const mongoose = require('mongoose');
 
 const addressSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  email: {
+  fullName: {
     type: String,
     required: true,
   },
   address: {
     type: String,
     required: true,
-  },
-  address2: {
-    type: String,
   },
   country: {
     type: String,
@@ -27,18 +16,6 @@ const addressSchema = new mongoose.Schema({
   state: {
     type: String,
     required: true,
-  },
-  zip: {
-    type: String,
-    required: true,
-  },
-  sameAsBilling: {
-    type: Boolean,
-    default: false,
-  },
-  saveInfo: {
-    type: Boolean,
-    default: false,
   },
 });
 
@@ -51,8 +28,13 @@ const orderSchema = new mongoose.Schema({
   address: addressSchema,
   orderItems: [
     {
-      name: {
-        type: String,
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true,
+      },
+      quantity: {
+        type: Number,
         required: true,
       },
     },
