@@ -125,17 +125,20 @@ const Profile = () => {
           {activeTab === 'orders' && (
             <div className="mb-48">
               <h2 className="text-2xl mb-4 mt-16 ">My Orders</h2>
-              {orders.map((order, index) => (
-                <div key={index} className="border p-4 mb-4">
-                  <h3 className="text-lg font-bold">Order #{index + 1}</h3>
-                  <p>Status: {order.status}</p>
-                  <p>Total Price: ${order.totalPrice}</p>
-                  <p>Date: {new Date(order.createdAt).toLocaleString()}</p>
-                  <p>Address: {order.address.address}</p>
-                  <p>State: {order.address.state}</p>
-                  <p>Country: {order.address.country}</p>
-                </div>
-              ))}
+              {orders
+                .slice()
+                .reverse()
+                .map((order, index) => (
+                  <div key={index} className="border p-4 mb-4">
+                    <h3 className="text-lg font-bold">Order #{index + 1}</h3>
+                    <p>Status: {order.status}</p>
+                    <p>Total Price: ${order.totalPrice}</p>
+                    <p>Date: {new Date(order.createdAt).toLocaleString()}</p>
+                    <p>Address: {order.address.address}</p>
+                    <p>State: {order.address.state}</p>
+                    <p>Country: {order.address.country}</p>
+                  </div>
+                ))}
             </div>
           )}
         </div>
