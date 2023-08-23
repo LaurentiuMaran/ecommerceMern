@@ -10,7 +10,7 @@ import {
 export const OrderEdit = (props) => (
   <Edit {...props}>
     <SimpleForm>
-      <TextInput source="user" fullWidth disabled />
+      <TextInput source="address.fullName" label="Name" fullWidth disabled />
       <NumberInput source="totalPrice" fullWidth />
       <SelectInput
         source="status"

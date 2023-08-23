@@ -55,13 +55,24 @@ const adminDataProvider = {
 
   getOne: (resource, params) => {
     return dataProvider.getOne(resource, params).then((response) => {
-      if (resource === 'orders') {
+      if (resource === 'products') {
         if (
           response.data &&
-          response.data.success &&
-          response.data.order &&
-          response.data.order._id
+          response.data.product &&
+          response.data.product._id
         ) {
+          return {
+            data: {
+              ...response.data.product,
+              id: response.data.product._id,
+            },
+          };
+        } else {
+          console.error('Unexpected response format', response);
+          throw new Error('Product data does not have an id');
+        }
+      } else if (resource === 'orders') {
+        if (response.data && response.data.order && response.data.order._id) {
           return {
             data: {
               ...response.data.order,
@@ -69,7 +80,7 @@ const adminDataProvider = {
             },
           };
         } else {
-          console.error('Unexpected response format for orders', response);
+          console.error('Unexpected response format', response);
           throw new Error('Order data does not have an id');
         }
       } else {
@@ -105,8 +116,8 @@ const adminDataProvider = {
   },
   create: (resource, params) => {
     return dataProvider.create(resource, params).then((response) => {
-      if (response.data && response.data.success && response.data.product) {
-        const product = response.data.product;
+      if (response.success && response.product) {
+        const product = response.product;
         if (!product.id && product._id) {
           return {
             data: {

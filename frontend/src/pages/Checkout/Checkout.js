@@ -67,7 +67,7 @@ const CheckoutForm = ({ handleStripePayment, formValues }) => {
 };
 
 const Checkout = () => {
-  const [state] = useContext(CartContext);
+  const [state, dispatch] = useContext(CartContext);
   const { items } = state;
   const { addToast } = useToasts();
   const navigate = useNavigate();
@@ -84,6 +84,7 @@ const Checkout = () => {
       addToast('Payment and Order were successfully processed', {
         appearance: 'success',
       });
+      dispatch({ type: 'CLEAR_CART' });
       navigate('/');
     } catch (error) {
       addToast('An error occurred while processing the payment and order', {
@@ -101,6 +102,7 @@ const Checkout = () => {
 
       await createOrder(values, items, totalPrice);
       addToast('Order was successfully placed', { appearance: 'success' });
+      dispatch({ type: 'CLEAR_CART' });
       navigate('/');
     } catch (error) {
       addToast('An error occurred while placing the order', {

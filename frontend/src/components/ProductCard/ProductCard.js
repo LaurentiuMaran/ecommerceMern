@@ -9,16 +9,11 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = () => {
     try {
-      const isItemInCart = state.items.some((item) => item.id === product.id);
-      if (isItemInCart) {
-        addToast('Item already in cart', { appearance: 'warning' });
-      } else {
-        dispatch({
-          type: 'ADD_ITEM',
-          payload: product,
-        });
-        addToast('Product added to cart', { appearance: 'success' });
-      }
+      dispatch({
+        type: 'ADD_ITEM',
+        payload: { ...product, quantity: 1 },
+      });
+      addToast('Product added to cart', { appearance: 'success' });
     } catch (err) {
       addToast('Product could not be added to cart', { appearance: 'error' });
     }

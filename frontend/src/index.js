@@ -7,11 +7,9 @@ import { ToastProvider } from 'react-toast-notifications';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <ToastProvider autoDismiss={true} placement="bottom-right">
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </ToastProvider>
-  </React.StrictMode>
+  <ToastProvider autoDismiss={true} placement="bottom-right">
+    <CartProvider>
+      <App />
+    </CartProvider>
+  </ToastProvider>
 );

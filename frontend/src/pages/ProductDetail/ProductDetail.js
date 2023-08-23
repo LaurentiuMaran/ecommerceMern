@@ -13,6 +13,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [state, dispatch] = useContext(CartContext);
   const { addToast } = useToasts();
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -31,16 +32,15 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     try {
-      const isItemInCart = state.items.some((item) => item.id === product._id);
-      if (isItemInCart) {
-        addToast('Item already in cart', { appearance: 'warning' });
-      } else {
-        dispatch({
-          type: 'ADD_ITEM',
-          payload: product,
-        });
-        addToast('Product added to cart', { appearance: 'success' });
-      }
+      dispatch({
+        type: 'ADD_ITEM',
+        payload: {
+          ...product,
+          id: product._id,
+          quantity: parseInt(quantity, 10),
+        },
+      });
+      addToast('Product added to cart', { appearance: 'success' });
     } catch (err) {
       addToast('Product could not be added to cart', { appearance: 'error' });
     }
@@ -70,6 +70,15 @@ const ProductDetail = () => {
           <p className="text-2xl font-bold mb-2">${product.price}</p>
           <hr className="border-black mb-2 w-72" />
           <p className="text-lg mb-5 ">{product.description}</p>
+          <div className="mb-6">
+            <label className="mr-2">Quantity: </label>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              min="1"
+            />
+          </div>
           <button
             onClick={handleAddToCart}
             className="bg-black text-white px-8 py-4 rounded-full hover:bg-gray-800 transition-colors duration-300"
