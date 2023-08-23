@@ -6,7 +6,7 @@ import NewsletterSubscribe from '../../components/NewsletterSubscribe/Newsletter
 import Loader from '../../components/Loader/Loader';
 import { getAllProducts } from '../../utils/products/getAllProducts';
 
-const Products = () => {
+const Shop = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -58,4 +58,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Shop;

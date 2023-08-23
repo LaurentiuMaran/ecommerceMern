@@ -10,7 +10,7 @@ import Checkout from './pages/Checkout/Checkout';
 import Contact from './pages/Contact/Contact';
 import Home from './pages/Home/Home';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
-import Products from './pages/Products/Products';
+import Shop from './pages/Shop/Shop';
 import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
@@ -34,7 +34,7 @@ const Routes = () => {
           path="/shop"
           element={
             <AuthWrapper>
-              <Products />
+              <Shop />
             </AuthWrapper>
           }
         />

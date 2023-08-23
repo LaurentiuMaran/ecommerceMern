@@ -4,39 +4,15 @@ import { CartContext } from '../../utils/context/cartContext';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import Loader from '../../components/Loader/Loader';
+import NewsletterSubscribe from '../../components/NewsletterSubscribe/NewsletterSubscribe';
 import { getProductById } from '../../utils/products/getProductById';
 import { useToasts } from 'react-toast-notifications';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-
   const [state, dispatch] = useContext(CartContext);
-
   const { addToast } = useToasts();
-
-  const handleAddToCart = () => {
-    try {
-      const isItemInCart = state.items.some((item) => item.id === product._id);
-      if (isItemInCart) {
-        addToast('Item already in cart', { appearance: 'warning' });
-      } else {
-        dispatch({
-          type: 'ADD_ITEM',
-          payload: {
-            id: product._id,
-            image: product.image,
-            name: product.name,
-            description: product.description,
-            price: product.price,
-          },
-        });
-        addToast('Product added to cart', { appearance: 'success' });
-      }
-    } catch (err) {
-      addToast('Product could not been added to cart', { appearance: 'error' });
-    }
-  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -53,77 +29,56 @@ const ProductDetail = () => {
     fetchProduct();
   }, [addToast, id]);
 
+  const handleAddToCart = () => {
+    try {
+      const isItemInCart = state.items.some((item) => item.id === product._id);
+      if (isItemInCart) {
+        addToast('Item already in cart', { appearance: 'warning' });
+      } else {
+        dispatch({
+          type: 'ADD_ITEM',
+          payload: product,
+        });
+        addToast('Product added to cart', { appearance: 'success' });
+      }
+    } catch (err) {
+      addToast('Product could not be added to cart', { appearance: 'error' });
+    }
+  };
+
+  if (!product) return <Loader />;
+
   return (
-    <div className="bg-background flex flex-col min-h-screen flex-grow">
+    <div className="bg-white flex flex-col min-h-screen flex-grow">
       <Navbar />
-      <Link
-        to="/products"
-        className="bg-gray-600 text-white rounded-full px-4 py-2 hover:bg-gray-800 transition-colors duration-300 absolute top-16 left-4 mt-7 flex items-center space-x-2"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          className="h-5 w-5 text-white"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+      <div className="flex flex-row justify-center items-start my-10 mb-16">
+        <div className="w-1/2 ml-4">
+          <img
+            className="w-4/5 object-cover rounded-2xl"
+            src={product.image}
+            alt={product.name}
           />
-        </svg>
-        <span>Back to Products</span>
-      </Link>
-      <p className="text-5xl font-bold mx-auto py-10">
-        {product ? product.name : <Loader />}
-      </p>
-      <div className="flex flex-col items-center py-10 w-full">
-        {product ? (
-          <>
-            <div className="text-center w-full">
-              <img
-                className="h-96 w-full object-contain mx-auto"
-                src={product.image}
-                alt={product.name}
-              />
-              <button
-                onClick={handleAddToCart}
-                className="bg-primary text-white rounded-full px-10 py-3 mt-4 hover:bg-secondary transition-colors duration-300"
-              >
-                Add to Cart
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 w-full md:max-w-3xl mx-auto">
-              <div className="p-6 rounded-lg">
-                <p className="text-xl">
-                  <strong>Price:</strong> ${product.price}
-                </p>
-                <p className="text-xl">
-                  <strong>Category:</strong> {product.category}
-                </p>
-              </div>
-              <div className="p-6 rounded-lg">
-                <p className="text-xl">
-                  <strong>Stock:</strong> {product.stock}
-                </p>
-                <p className="text-xl">
-                  <strong>Manufacturer:</strong> {product.manufacturer}
-                </p>
-              </div>
-            </div>
-            <div className="mt-4 w-full md:max-w-3xl mx-auto">
-              <p className="text-xl">
-                <strong>Description:</strong>
-              </p>
-              <p className="text-lg">{product.description}</p>
-            </div>
-          </>
-        ) : (
-          <Loader />
-        )}
+        </div>
+        <div className="w-1/3 flex flex-col justify-center items-start">
+          <Link to="/shop" className="mb-5 text-gray-600 hover:underline">
+            &larr; Back to Shop
+          </Link>
+          <h2 className="text-4xl font-bold mb-2">{product.name}</h2>
+          <p className="text-xl mb-1">Manufacturer: {product.manufacturer}</p>
+          <p className="text-xl mb-1">Category: {product.category}</p>
+          <p className="text-xl mb-1">Stock: {product.stock}</p>
+          <p className="text-2xl font-bold mb-2">${product.price}</p>
+          <hr className="border-black mb-2 w-72" />
+          <p className="text-lg mb-5 ">{product.description}</p>
+          <button
+            onClick={handleAddToCart}
+            className="bg-black text-white px-8 py-4 rounded-full hover:bg-gray-800 transition-colors duration-300"
+          >
+            Add to Cart
+          </button>
+        </div>
       </div>
+      <NewsletterSubscribe />
       <Footer />
     </div>
   );
