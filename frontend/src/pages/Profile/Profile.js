@@ -9,7 +9,7 @@ import { useToasts } from 'react-toast-notifications';
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [orders, setOrders] = useState([]);
-
+  const [activeTab, setActiveTab] = useState('profile');
   const { addToast } = useToasts();
 
   useEffect(() => {
@@ -35,47 +35,119 @@ const Profile = () => {
     fetchUserAndOrders();
   }, [addToast]);
 
+  if (!user) return <Loader />;
+
   return (
-    <div className="bg-background flex flex-col min-h-screen">
+    <div className="bg-white flex flex-col min-h-screen">
       <Navbar />
-      <div className="container text-center mx-auto py-10 flex-grow">
-        <p className="text-5xl font-bold mb-3">Profile</p>
-        {user && orders ? (
-          <>
-            <div className="mt-10 text-left px-10 flex flex-col items-center">
-              <i className="fas fa-user text-9xl mb-10"></i>
-              <p className="text-2xl font-bold mb-2">Name: {user.name}</p>
-              <p className="text-2xl mb-2">Email: {user.email}</p>
-              <p className="text-2xl">Role: {user.role}</p>
-            </div>
-            <div className="w-full border-b border-black mt-10"></div>
-            <div className="mt-12 text-center px-10 flex flex-col items-center">
-              <h2 className="text-3xl font-bold mb-3">Orders History</h2>
-              {orders.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {orders.map((order, index) => (
-                    <div
-                      key={order._id}
-                      className="w-full mb-4 p-3 border-b border-black"
-                    >
-                      <h3 className="font-bold text-xl mb-2">
-                        Order ID: {index + 1}
-                      </h3>
-                      <p className="mb-1">Status: {order.orderStatus}</p>
-                      <p className="mb-1">
-                        Total Price: {order.totalPrice.toFixed(2)}
-                      </p>
-                    </div>
-                  ))}
+      <div className="container mx-auto flex flex-grow">
+        <div className="w-1/4 mt-10 ">
+          <ul className="text-xl pl-4">
+            <li
+              className={`${
+                activeTab === 'profile' ? 'font-bold' : ''
+              } cursor-pointer`}
+              onClick={() => setActiveTab('profile')}
+            >
+              Edit Profile
+            </li>
+            <li
+              className={`${
+                activeTab === 'orders' ? 'font-bold' : ''
+              } cursor-pointer`}
+              onClick={() => setActiveTab('orders')}
+            >
+              My Orders
+            </li>
+          </ul>
+        </div>
+        <div className="w-3/4 ml-4">
+          <h1 className="text-right text-2xl mt-10">Welcome, {user.name}</h1>
+          {activeTab === 'profile' && (
+            <section className="mt-16 mb-48">
+              <h2 className="text-2xl mb-4">Edit Your Profile</h2>
+              <form>
+                <div className="mb-4">
+                  <label className="block text-gray-700">Name</label>
+                  <input
+                    className="w-full p-2 rounded border bg-gray-200"
+                    type="text"
+                    defaultValue={user.name}
+                  />
                 </div>
-              ) : (
-                <p className="text-xl mt-2">No orders have been made yet.</p>
-              )}
+                <div className="mb-4">
+                  <label className="block text-gray-700">Email</label>
+                  <input
+                    className="w-full p-2 rounded border bg-gray-200"
+                    type="email"
+                    defaultValue={user.email}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700">Password Change</label>
+                  <input
+                    className="w-full p-2 rounded border bg-gray-200"
+                    type="password"
+                    placeholder="Current Password"
+                  />
+                </div>
+                <div className="mb-4">
+                  <input
+                    className="w-full p-2 rounded border bg-gray-200"
+                    type="password"
+                    placeholder="New Password"
+                  />
+                </div>
+                <div className="mb-4">
+                  <input
+                    className="w-full p-2 rounded border bg-gray-200"
+                    type="password"
+                    placeholder="Confirm New Password"
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-black text-white hover:bg-gray-600 rounded"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </section>
+          )}
+          {activeTab === 'orders' && (
+            <div>
+              <h2 className="text-2xl mb-4 mt-16 mb-48">My Orders</h2>
+              {orders.map((order, index) => (
+                <div key={index} className="border p-4 mb-4">
+                  <h3 className="text-lg font-bold">Order #{index + 1}</h3>
+                  <p>Status: {order.status}</p>
+                  <p>Total Price: ${order.totalPrice}</p>
+                  <p>
+                    Created At: {new Date(order.createdAt).toLocaleString()}
+                  </p>
+                  <h4>Address:</h4>
+                  <p>
+                    {order.address.firstName} {order.address.lastName}
+                  </p>
+                  <p>{order.address.address}</p>
+                  <p>{order.address.address2}</p>
+                  <p>
+                    {order.address.city}, {order.address.state}{' '}
+                    {order.address.zip}
+                  </p>
+                </div>
+              ))}
             </div>
-          </>
-        ) : (
-          <Loader />
-        )}
+          )}
+        </div>
       </div>
       <Footer />
     </div>
