@@ -14,14 +14,13 @@ const CartItem = ({ item }) => {
 
   return (
     <div className="flex justify-between items-center border-b py-2">
-      <div className="flex items-center">
+      <div className="flex items-center" style={{ width: '50%' }}>
         <img src={item.image} alt={item.name} className="w-16 h-16" />
         <div className="ml-4">
           <h2 className="text-lg">{item.name}</h2>
-          <p className="text-sm text-gray-500">{item.description}</p>
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center justify-end" style={{ width: '25%' }}>
         <label htmlFor={`quantity-${item.id}`} className="mr-2">
           Quantity:
         </label>
@@ -34,7 +33,7 @@ const CartItem = ({ item }) => {
           className="w-16 text-center"
         />
       </div>
-      <div className="w-24 text-right">
+      <div className="w-24 text-right" style={{ width: '25%' }}>
         <span className="text-lg">
           ${(item.price * item.quantity).toFixed(2)}
         </span>
