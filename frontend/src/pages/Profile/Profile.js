@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import Loader from '../../components/Loader/Loader';
+import { updateUserProfile } from '../../utils/auth/updateUserProfile';
 import { getUserById } from '../../utils/auth/getUserById';
 import { getMyOrders } from '../../utils/orders/getMyOrders';
 import { useToasts } from 'react-toast-notifications';
@@ -9,8 +10,16 @@ import { useToasts } from 'react-toast-notifications';
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [orders, setOrders] = useState([]);
+  const [forceUpdate, setForceUpdate] = useState(0);
   const [activeTab, setActiveTab] = useState('profile');
   const { addToast } = useToasts();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
 
   useEffect(() => {
     const fetchUserAndOrders = async () => {
@@ -20,6 +29,11 @@ const Profile = () => {
 
         if (fetchedUser) {
           setUser(fetchedUser);
+          setFormData({
+            ...formData,
+            name: fetchedUser.name,
+            email: fetchedUser.email,
+          });
         }
 
         if (fetchedOrders) {
@@ -34,6 +48,35 @@ const Profile = () => {
 
     fetchUserAndOrders();
   }, [addToast]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedUser = await updateUserProfile(formData);
+      setUser(updatedUser);
+      setForceUpdate(forceUpdate + 1);
+      addToast('Profile updated successfully', {
+        appearance: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+      addToast(
+        error.response.data.msg ||
+          'An error occurred while updating the profile',
+        {
+          appearance: 'error',
+        }
+      );
+    }
+  };
 
   if (!user) return <Loader />;
 
@@ -66,13 +109,15 @@ const Profile = () => {
           {activeTab === 'profile' && (
             <section className="mt-16 mb-48">
               <h2 className="text-2xl mb-4">Edit Your Profile</h2>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label className="block text-gray-700">Name</label>
                   <input
                     className="w-full p-2 rounded border bg-gray-200"
                     type="text"
-                    defaultValue={user.name}
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -80,7 +125,9 @@ const Profile = () => {
                   <input
                     className="w-full p-2 rounded border bg-gray-200"
                     type="email"
-                    defaultValue={user.email}
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -88,37 +135,39 @@ const Profile = () => {
                   <input
                     className="w-full p-2 rounded border bg-gray-200"
                     type="password"
+                    name="currentPassword"
                     placeholder="Current Password"
+                    value={formData.currentPassword}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="mb-4">
                   <input
                     className="w-full p-2 rounded border bg-gray-200"
                     type="password"
+                    name="newPassword"
                     placeholder="New Password"
+                    value={formData.newPassword}
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="mb-4">
                   <input
                     className="w-full p-2 rounded border bg-gray-200"
                     type="password"
+                    name="confirmPassword" // Add the name attribute
                     placeholder="Confirm New Password"
+                    value={formData.confirmPassword} // Use value to make it a controlled component
+                    onChange={handleInputChange} // Add onChange handler
                   />
                 </div>
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-black text-white hover:bg-gray-600 rounded"
-                  >
-                    Save Changes
-                  </button>
-                </div>
+
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-black text-white hover:bg-gray-600 rounded"
+                >
+                  Save Changes
+                </button>
               </form>
             </section>
           )}
