@@ -12,6 +12,13 @@ const CartItem = ({ item }) => {
     });
   };
 
+  const handleRemoveItem = () => {
+    dispatch({
+      type: 'REMOVE_ITEM',
+      payload: { id: item.id },
+    });
+  };
+
   return (
     <div className="flex justify-between items-center border-b py-2">
       <div className="flex items-center" style={{ width: '50%' }}>
@@ -37,6 +44,9 @@ const CartItem = ({ item }) => {
         <span className="text-lg">
           ${(item.price * item.quantity).toFixed(2)}
         </span>
+        <button onClick={handleRemoveItem} className="ml-4 text-red-500">
+          <span className="fa fa-trash"></span>
+        </button>
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
+const mongoose = require('mongoose');
 const Order = require('../schemas/orderSchema');
 const Product = require('../schemas/productSchema');
 
 exports.newOrder = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
     const { user, address, orderItems, totalPrice } = req.body;
     if (
@@ -26,19 +29,25 @@ exports.newOrder = async (req, res) => {
     for (const item of newOrder.orderItems) {
       const product = await Product.findById(item.product);
       if (product) {
+        if (product.stock < item.quantity) {
+          throw new Error('Not enough items in stock');
+        }
         product.stock -= item.quantity;
-        await product.save();
+        await product.save({ session });
       } else {
-        return res
-          .status(404)
-          .json({ success: false, error: 'Product not found' });
+        throw new Error('Product not found');
       }
     }
 
-    await newOrder.save();
+    await newOrder.save({ session });
+
+    await session.commitTransaction();
+    session.endSession();
 
     res.status(201).json({ success: true, order: newOrder });
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     res.status(500).json({
       success: false,
       error: 'An error occurred while creating the order',
