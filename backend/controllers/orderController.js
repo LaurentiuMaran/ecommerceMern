@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Order = require('../schemas/orderSchema');
 const Product = require('../schemas/productSchema');
+const sendEmail = require('../mailer');
 
 exports.newOrder = async (req, res) => {
   const session = await mongoose.startSession();
@@ -42,16 +43,30 @@ exports.newOrder = async (req, res) => {
     await newOrder.save({ session });
 
     await session.commitTransaction();
-    session.endSession();
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: 'New Order Created',
+        message: 'Your order has been created successfully.',
+      });
+    } catch (emailError) {
+      console.error('Email could not be sent:', emailError);
+    }
 
     res.status(201).json({ success: true, order: newOrder });
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
+    console.error('Error:', error);
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
+
     res.status(500).json({
       success: false,
       error: 'An error occurred while creating the order',
     });
+  } finally {
+    session.endSession();
   }
 };
 
@@ -128,6 +143,16 @@ exports.updateOrder = async (req, res) => {
     }
 
     await order.save();
+
+    try {
+      await sendEmail({
+        email: order.user.email,
+        subject: 'Order Updated',
+        message: `Your order has been updated to ${order.status}.`,
+      });
+    } catch (emailError) {
+      console.error('Email could not be sent:', emailError);
+    }
 
     res.status(200).json({ success: true, order });
   } catch (error) {
