@@ -83,8 +83,8 @@ const Profile = () => {
   return (
     <div className="bg-white flex flex-col min-h-screen">
       <Navbar />
-      <div className="container mx-auto flex flex-grow">
-        <div className="w-1/4 mt-10 ">
+      <div className="container mx-auto flex flex-col md:flex-row flex-grow">
+        <div className="w-full md:w-1/4 mt-10 text-center md:text-left">
           <ul className="text-xl pl-4">
             <li
               className={`${
@@ -104,8 +104,10 @@ const Profile = () => {
             </li>
           </ul>
         </div>
-        <div className="w-3/4 ml-4">
-          <h1 className="text-right text-2xl mt-10">Welcome, {user.name}</h1>
+        <div className="w-3/4 md:w-3/4 mx-auto md:ml-4">
+          <h1 className="text-center md:text-right text-2xl mt-10">
+            Welcome, {user.name}
+          </h1>
           {activeTab === 'profile' && (
             <section className="mt-16 mb-48">
               <h2 className="text-2xl mb-4">Edit Your Profile</h2>

@@ -72,7 +72,7 @@ const CheckoutForm = () => {
       }}
     >
       {(formik) => (
-        <Form className="bg-white shadow-md rounded px-4 md:px-8 pt-4 md:pt-6 pb-4 md:pb-8 mb-4 text-left w-full md:w-1/2 mx-auto">
+        <Form className="bg-white shadow-md rounded px-2 md:px-4 pt-2 md:pt-4 pb-2 md:pb-4 mb-2 md:mb-4 text-left w-full md:w-3/4 lg:w-1/2 mx-auto">
           <TextInput
             label="First Name"
             name="firstName"
@@ -131,7 +131,7 @@ const CheckoutForm = () => {
           <button
             type="submit"
             disabled={formik.isSubmitting}
-            className="bg-primary text-white rounded-full px-6 md:px-10 py-2 md:py-3 hover:bg-secondary transition-colors duration-300"
+            className="bg-primary text-white rounded-full px-4 md:px-6 py-1 md:py-2 hover:bg-secondary transition-colors duration-300"
           >
             Submit
           </button>

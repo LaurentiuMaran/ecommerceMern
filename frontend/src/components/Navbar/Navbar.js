@@ -7,6 +7,7 @@ const Navbar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const logoutHandler = () => {
@@ -19,6 +20,10 @@ const Navbar = () => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropdownVisible(false);
     }
+  };
+
+  const toggleHamburger = () => {
+    setIsHamburgerOpen(!isHamburgerOpen);
   };
 
   useEffect(() => {
@@ -38,10 +43,10 @@ const Navbar = () => {
     } else {
       const fetchUser = async () => {
         const user = await getUserById();
+
         setIsAdmin(user?.role === 'admin');
         localStorage.setItem('userRole', user?.role);
       };
-
       fetchUser();
     }
   }, []);
@@ -49,46 +54,53 @@ const Navbar = () => {
   return (
     <nav className="bg-white border-b border-mainGray text-black px-4 md:px-6 py-2 md:py-4">
       <div className="flex flex-col md:flex-row items-center justify-between">
-        <div className="flex items-center mb-2 md:mb-0">
+        <div className="flex items-center justify-between w-full md:w-auto mb-2 md:mb-0">
           <div className="text-xl md:text-2xl font-bold">
             <p>BazaarBasket</p>
           </div>
-          <div className="ml-4 md:ml-8 flex flex-wrap">
-            <Link to="/" className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded">
-              Home
-            </Link>
-            {isAuthenticated ? (
-              <>
-                <Link
-                  to="/shop"
-                  className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
-                >
-                  Shop
-                </Link>
-                <Link
-                  to="/about"
-                  className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
-                >
-                  About
-                </Link>
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
-                  >
-                    Admin
-                  </Link>
-                )}
-              </>
-            ) : (
+          <button className="md:hidden" onClick={toggleHamburger}>
+            <i className="fas fa-bars"></i>
+          </button>
+        </div>
+        <div
+          className={`flex flex-col md:flex-row ${
+            isHamburgerOpen ? 'block' : 'hidden md:block'
+          }`}
+        >
+          <Link to="/" className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded">
+            Home
+          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link
+                to="/shop"
+                className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
+              >
+                Shop
+              </Link>
               <Link
                 to="/about"
                 className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
               >
                 About
               </Link>
-            )}
-          </div>
+              {isAdmin && (
+                <Link
+                  to="/admin"
+                  className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
+                >
+                  Admin
+                </Link>
+              )}
+            </>
+          ) : (
+            <Link
+              to="/about"
+              className="mx-1 md:mx-3 hover:bg-gray-200 p-2 rounded"
+            >
+              About
+            </Link>
+          )}
         </div>
         {isAuthenticated ? (
           <div className="flex items-center">

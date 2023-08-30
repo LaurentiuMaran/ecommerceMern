@@ -113,7 +113,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="bg-white flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen">
       <Navbar />
       <div className="flex-grow container mx-auto p-4 mt-10 mb-24">
         <Formik
@@ -207,8 +207,10 @@ const Checkout = () => {
                   />
                 </div>
               </div>
-              <div className="md:ml-8 mt-4 md:mt-0 w-96">
-                <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+              <div className="md:ml-8 mt-4 md:mt-0 w-full md:w-96">
+                <h2 className="text-xl font-bold mb-4">
+                  Select Payment Method
+                </h2>
                 <div className="border p-4">
                   <div className="mb-4">
                     <label className="mr-4">Payment Method:</label>

@@ -32,15 +32,15 @@ const Register = () => {
   return (
     <div className="bg-white flex flex-col min-h-screen">
       <Navbar />
-      <div className="flex-grow flex mt-4 mb-24">
-        <div className="w-1/2">
+      <div className="flex-grow flex flex-col md:flex-row mt-4 mb-24">
+        <div className="w-full md:w-1/2">
           <img
             src={loginImage}
             alt="Register"
             className="h-full w-full object-cover"
           />
         </div>
-        <div className="w-1/2 p-10">
+        <div className="w-full md:w-1/2 p-4 md:p-10">
           <h1 className="text-3xl mb-2">Create an account</h1>
           <p className="mb-6">Enter your details below</p>
           <Formik
@@ -106,10 +106,10 @@ const Register = () => {
                   className="text-red-500"
                 />
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col md:flex-row justify-between items-center">
                 <button
                   type="submit"
-                  className="bg-black text-white rounded-full px-10 py-2"
+                  className="bg-black text-white rounded-full px-10 py-2 mb-2 md:mb-0"
                 >
                   Register
                 </button>

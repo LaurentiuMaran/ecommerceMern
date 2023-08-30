@@ -28,7 +28,7 @@ const Cart = () => {
               <p className="text-lg text-gray-500">No items in cart.</p>
             )}
           </div>
-          <div className="md:ml-8 mt-4 md:mt-0 w-96">
+          <div className="md:ml-8 mt-4 md:mt-0 w-full md:w-96">
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
             <div className="border p-4">
               <div className="flex justify-between mb-2">

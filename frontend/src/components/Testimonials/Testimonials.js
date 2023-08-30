@@ -73,20 +73,32 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="w-full p-8 bg-white">
-      <h2 className="text-4xl font-bold mb-8">Our Happy Customers</h2>
-      <div className="flex justify-between">
-        <button onClick={handlePrevious}>←</button>
-        <div className={`border-mainGray border p-4 w-80 ${fade}`}>
-          <div className="flex justify-left mb-2">{'⭐️ ⭐️ ⭐️ ⭐️ ⭐️'}</div>
+    <div className="w-full p-4 md:p-8 bg-white">
+      <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-8">
+        Our Happy Customers
+      </h2>
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <button onClick={handlePrevious} className="text-2xl mb-2 md:mb-0">
+          ←
+        </button>
+        <div
+          className={`border-mainGray border p-2 md:p-4 w-full md:w-80 ${fade}`}
+        >
+          <div className="flex justify-left mb-1 md:mb-2">
+            {'⭐️ ⭐️ ⭐️ ⭐️ ⭐️'}
+          </div>
           <div className="flex items-center">
-            <h3 className="font-bold ml-1">
+            <h3 className="font-bold ml-1 text-md md:text-lg">
               {testimonialsData[currentIndex].name}
             </h3>
           </div>
-          <p>{testimonialsData[currentIndex].review}</p>
+          <p className="text-sm md:text-base">
+            {testimonialsData[currentIndex].review}
+          </p>
         </div>
-        <button onClick={handleNext}>→</button>
+        <button onClick={handleNext} className="text-2xl mt-2 md:mt-0">
+          →
+        </button>
       </div>
       <style jsx>{`
         .fadeIn {

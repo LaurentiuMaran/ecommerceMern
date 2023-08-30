@@ -51,15 +51,15 @@ const ProductDetail = () => {
   return (
     <div className="bg-white flex flex-col min-h-screen flex-grow">
       <Navbar />
-      <div className="flex flex-row justify-center items-start my-10 mb-16">
-        <div className="w-1/2 ml-4">
+      <div className="flex flex-col md:flex-row justify-center items-start my-10 mb-16">
+        <div className="w-full md:w-1/2 mx-auto mb-6 md:mb-0 md:mr-4 md:ml-4">
           <img
-            style={{ width: '700px', height: '700px', objectFit: 'cover' }}
+            className="w-full h-auto md:h-[700px] object-cover mx-auto"
             src={product.image}
             alt={product.name}
           />
         </div>
-        <div className="w-1/3 flex flex-col justify-center items-start">
+        <div className="w-full md:w-1/3 flex flex-col justify-center items-center md:items-start text-center md:text-left">
           <Link to="/shop" className="mb-5 text-gray-600 hover:underline">
             &larr; Back to Shop
           </Link>
@@ -68,8 +68,8 @@ const ProductDetail = () => {
           <p className="text-xl mb-1">Category: {product.category}</p>
           <p className="text-xl mb-1">Stock: {product.stock}</p>
           <p className="text-2xl font-bold mb-2">${product.price}</p>
-          <hr className="border-black mb-2 w-72" />
-          <p className="text-lg mb-5 ">{product.description}</p>
+          <hr className="border-black mb-2 w-72 mx-auto md:mx-0" />
+          <p className="text-lg mb-5">{product.description}</p>
           <div className="mb-6">
             <label className="mr-2">Quantity: </label>
             <input

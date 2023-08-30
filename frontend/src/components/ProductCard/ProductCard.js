@@ -20,25 +20,27 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="flex flex-col bg-mainGray rounded shadow-md overflow-hidden m-4 w-80 h-auto justify-between">
+    <div className="flex flex-col bg-mainGray rounded shadow-md overflow-hidden m-2 md:m-4 w-64 md:w-80 h-auto justify-between">
       <div className="w-full">
         <img
-          className="h-32 w-full object-cover"
+          className="h-24 md:h-32 w-full object-cover"
           src={product.image}
           alt={product.name}
         />
       </div>
-      <div className="flex flex-col items-center p-4">
+      <div className="flex flex-col items-center p-2 md:p-4">
         <div className="w-full text-center">
           <Link to={`/product/${product.id}`}>
-            <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
+            <h2 className="text-xl md:text-2xl font-bold mb-1 md:mb-2">
+              {product.name}
+            </h2>
           </Link>
-          <p className="font-bold mb-2">${product.price}</p>
+          <p className="font-bold mb-1 md:mb-2">${product.price}</p>
         </div>
         <div className="w-full text-center">
           <button
             onClick={handleAddToCart}
-            className="bg-black text-white rounded-full px-10 py-3 hover:bg-gray-800 transition-colors duration-300"
+            className="bg-black text-white rounded-full px-6 md:px-10 py-2 md:py-3 hover:bg-gray-800 transition-colors duration-300"
           >
             Add to Cart
           </button>
