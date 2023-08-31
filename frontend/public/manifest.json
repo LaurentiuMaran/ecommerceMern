@@ -1,6 +1,8 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "BazaarBasket",
+  "name": "BazaarBasket",
+  "description": "All purpose online shop",
+  "start_url": "/",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,7 +20,6 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
