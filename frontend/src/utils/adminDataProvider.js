@@ -98,27 +98,11 @@ const adminDataProvider = {
       }
     });
   },
-
   update: (resource, params) => {
     return dataProvider.update(resource, params).then((response) => {
-      if (response.data && !response.data.id && response.data._id) {
-        return {
-          data: {
-            ...response.data,
-            id: response.data._id,
-          },
-        };
-      } else {
-        console.error('Unexpected response format', response);
-        throw new Error('Data does not have an id');
-      }
-    });
-  },
-  create: (resource, params) => {
-    return dataProvider.create(resource, params).then((response) => {
-      if (response.success && response.product) {
-        const product = response.product;
-        if (!product.id && product._id) {
+      if (resource === 'products' && response.data && response.data.success && response.data.product) {
+        const product = response.data.product;
+        if (product._id) {
           return {
             data: {
               ...product,
@@ -127,14 +111,79 @@ const adminDataProvider = {
           };
         } else {
           console.error('Unexpected response format', response);
-          throw new Error('Data does not have an id');
+          throw new Error('Product data does not have an id');
+        }
+      } else if (resource === 'orders' && response.data && response.data.success && response.data.order) {
+        const order = response.data.order;
+        if (order._id) {
+          return {
+            data: {
+              ...order,
+              id: order._id,
+            },
+          };
+        } else {
+          console.error('Unexpected response format', response);
+          throw new Error('Order data does not have an id');
         }
       } else {
-        console.error('Unexpected response format', response);
-        throw new Error('Data does not have an id');
+        if (response.data && !response.data.id && response.data._id) {
+          return {
+            data: {
+              ...response.data,
+              id: response.data._id,
+            },
+          };
+        } else {
+          console.error('Unexpected response format', response);
+          throw new Error('Data does not have an id');
+        }
       }
     });
   },
+  create: (resource, params) => {
+    return dataProvider.create(resource, params).then((response) => {
+      if (resource === 'products' && response.data && response.data.success && response.data.product) {
+        const product = response.data.product;
+        if (product._id) {
+          return {
+            data: {
+              ...product,
+              id: product._id,
+            },
+          };
+        } else {
+          console.error('Unexpected response format', response);
+          throw new Error('Product data does not have an id');
+        }
+      } else if (resource === 'orders' && response.data && response.data.success && response.data.order) {
+        const order = response.data.order;
+        if (order._id) {
+          return {
+            data: {
+              ...order,
+              id: order._id,
+            },
+          };
+        } else {
+          console.error('Unexpected response format', response);
+          throw new Error('Order data does not have an id');
+        }
+      } else {
+        if (response.data && response.data._id) {
+          return {
+            data: {
+              ...response.data,
+              id: response.data._id,
+            },
+          };
+        } else {
+          console.error('Unexpected response format', response);
+          throw new Error('Data does not have an id');
+        }
+      }
+    });
+  },  
 };
 
 export default adminDataProvider;
