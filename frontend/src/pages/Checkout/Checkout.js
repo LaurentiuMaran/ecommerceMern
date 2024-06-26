@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
   state: Yup.string().required('Required'),
 });
 
-const CheckoutForm = ({ handleStripePayment, formValues }) => {
+const CheckoutForm = ({ handleStripePayment }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { addToast } = useToasts();
@@ -40,7 +40,7 @@ const CheckoutForm = ({ handleStripePayment, formValues }) => {
 
     const cardElement = elements.getElement(CardElement);
 
-    const { error } = await stripe.createPaymentMethod({
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
     });
@@ -48,21 +48,21 @@ const CheckoutForm = ({ handleStripePayment, formValues }) => {
     if (error) {
       addToast(error.message, { appearance: 'error' });
     } else {
-      handleStripePayment();
+      handleStripePayment(paymentMethod.id);
     }
   };
 
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <CardElement />
       <button
-        onClick={handleSubmit}
+        type="submit"
         disabled={!stripe}
         className="bg-black hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-2xl mt-4 w-64"
       >
         Pay with Card
       </button>
-    </>
+    </form>
   );
 };
 
@@ -73,19 +73,25 @@ const Checkout = () => {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState('cash');
 
-  const handleStripePayment = async (formValues) => {
+  const handleStripePayment = async (paymentMethodId, formValues) => {
     try {
       const totalPrice = items.reduce(
         (total, item) => total + item.price * (item.quantity || 1),
         0
       );
 
-      await createOrder(formValues, items, totalPrice);
-      addToast('Payment and Order were successfully processed', {
-        appearance: 'success',
-      });
-      dispatch({ type: 'CLEAR_CART' });
-      navigate('/');
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      if (paymentMethodId) {
+        await createOrder(formValues, items, totalPrice);
+        addToast('Payment and Order were successfully processed', {
+          appearance: 'success',
+        });
+        dispatch({ type: 'CLEAR_CART' });
+        navigate('/');
+      } else {
+        throw new Error('Payment method ID is missing');
+      }
     } catch (error) {
       addToast('An error occurred while processing the payment and order', {
         appearance: 'error',
@@ -226,15 +232,14 @@ const Checkout = () => {
                   {paymentMethod === 'cash' ? (
                     <button
                       type="submit"
-                      className="bg-black hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-2xl 2-64"
+                      className="bg-black hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-2xl w-64"
                     >
                       Pay with Cash
                     </button>
                   ) : (
                     <Elements stripe={stripePromise}>
                       <CheckoutForm
-                        handleStripePayment={() => handleStripePayment(values)}
-                        formValues={values}
+                        handleStripePayment={(paymentMethodId) => handleStripePayment(paymentMethodId, values)}
                       />
                     </Elements>
                   )}
